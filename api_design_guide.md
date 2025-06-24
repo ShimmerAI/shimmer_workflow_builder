@@ -304,7 +304,7 @@ The API should be organized into the following logical components:
 - Response: ReactFlow format data
 - Notes: Returns empty diagram if no ID provided
 
-### 5.3 Node Management
+### 5.3 Node Management (Priority 0)
 
 **POST /api/workflows/{workflow_id}/nodes**
 - Purpose: Add single node to workflow
@@ -333,7 +333,7 @@ The API should be organized into the following logical components:
 - Response: Array of created nodes
 - Use Case: Bulk operations, imports
 
-### 5.4 Edge Management
+### 5.4 Edge Management (priority 0)
 
 **POST /api/workflows/{workflow_id}/edges**
 - Purpose: Connect two nodes

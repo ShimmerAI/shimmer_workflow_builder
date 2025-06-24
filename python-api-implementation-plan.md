@@ -1257,39 +1257,41 @@ async def export_workflow(
 
 ### Base URL: `http://localhost:8000`
 
-| Method | Endpoint | Description | Request Body | Response |
-|--------|----------|-------------|--------------|----------|
+## API Endpoints with Time Estimates
+
+| Method | Endpoint | Description | Request Body | Response | Dev Hours | Notes |
+|--------|----------|-------------|--------------|----------|-----------|-------|
 | **Palette** |
-| GET | `/api/diagram/palette` | Get available node types | - | List of PaletteItem |
+| GET | `/api/diagram/palette` | Get available node types | - | List of PaletteItem | **4 hours** | Simple endpoint returning static node type definitions |
 | **Workflows** |
-| POST | `/api/workflows` | Create new workflow | WorkflowCreate | WorkflowResponse |
-| GET | `/api/workflows` | List all workflows | - | List of WorkflowResponse |
-| GET | `/api/workflows/{id}` | Get specific workflow | - | WorkflowResponse |
-| PUT | `/api/workflows/{id}` | Update workflow metadata | WorkflowUpdate | WorkflowResponse |
-| DELETE | `/api/workflows/{id}` | Delete workflow | - | Success message |
-| GET | `/api/diagram/diagram` | Get diagram (legacy) | - | ReactFlowData |
-| POST | `/api/workflows/{id}/save` | Save workflow state | ReactFlowData | Success message |
+| POST | `/api/workflows` | Create new workflow | WorkflowCreate | WorkflowResponse | **6 hours** | Includes validation, ID generation, database persistence |
+| GET | `/api/workflows` | List all workflows | - | List of WorkflowResponse | **4 hours** | Pagination, filtering, sorting support |
+| GET | `/api/workflows/{id}` | Get specific workflow | - | WorkflowResponse | **3 hours** | Simple retrieval with error handling |
+| PUT | `/api/workflows/{id}` | Update workflow metadata | WorkflowUpdate | WorkflowResponse | **5 hours** | Partial updates, validation, versioning |
+| DELETE | `/api/workflows/{id}` | Delete workflow | - | Success message | **4 hours** | Cascade deletion, soft delete option |
+| GET | `/api/diagram/diagram` | Get diagram (legacy) | - | ReactFlowData | **3 hours** | Legacy support, data transformation |
+| POST | `/api/workflows/{id}/save` | Save workflow state | ReactFlowData | Success message | **8 hours** | Complex validation, state management, versioning |
 | **Nodes** |
-| POST | `/api/workflows/{id}/nodes` | Add node | NodeCreate | ReactFlowNode |
-| PUT | `/api/workflows/{id}/nodes/{nodeId}` | Update node | NodeUpdate | ReactFlowNode |
-| DELETE | `/api/workflows/{id}/nodes/{nodeId}` | Delete node | - | Success message |
-| POST | `/api/workflows/{id}/nodes/batch` | Add multiple nodes | List[NodeCreate] | List[ReactFlowNode] |
+| POST | `/api/workflows/{id}/nodes` | Add node | NodeCreate | ReactFlowNode | **8 hours** | Schema validation, position calculation, ID generation |
+| PUT | `/api/workflows/{id}/nodes/{nodeId}` | Update node | NodeUpdate | ReactFlowNode | **6 hours** | Property validation, connection updates |
+| DELETE | `/api/workflows/{id}/nodes/{nodeId}` | Delete node | - | Success message | **5 hours** | Edge cleanup, validation of workflow integrity |
+| POST | `/api/workflows/{id}/nodes/batch` | Add multiple nodes | List[NodeCreate] | List[ReactFlowNode] | **10 hours** | Batch processing, transaction handling, position optimization |
 | **Edges** |
-| POST | `/api/workflows/{id}/edges` | Add edge | EdgeCreate | ReactFlowEdge |
-| PUT | `/api/workflows/{id}/edges/{edgeId}` | Update edge | EdgeUpdate | ReactFlowEdge |
-| DELETE | `/api/workflows/{id}/edges/{edgeId}` | Delete edge | - | Success message |
-| POST | `/api/workflows/{id}/edges/batch` | Add multiple edges | List[EdgeCreate] | List[ReactFlowEdge] |
+| POST | `/api/workflows/{id}/edges` | Add edge | EdgeCreate | ReactFlowEdge | **6 hours** | Connection validation, cycle detection |
+| PUT | `/api/workflows/{id}/edges/{edgeId}` | Update edge | EdgeUpdate | ReactFlowEdge | **5 hours** | Reconnection logic, validation |
+| DELETE | `/api/workflows/{id}/edges/{edgeId}` | Delete edge | - | Success message | **4 hours** | Workflow integrity checks |
+| POST | `/api/workflows/{id}/edges/batch` | Add multiple edges | List[EdgeCreate] | List[ReactFlowEdge] | **8 hours** | Batch validation, complex graph operations |
 | **Generator/LLM** |
-| GET | `/api/generator/llm/{prompt}` | Generate from prompt (legacy) | - | ReactFlowData |
-| POST | `/api/generator/generate` | Generate from prompt | GenerateRequest | GenerateResponse |
-| GET | `/api/generator/templates` | Get workflow templates | - | List[WorkflowTemplate] |
-| POST | `/api/generator/enhance/{id}` | Enhance workflow with AI | Enhancement type | WorkflowResponse |
+| GET | `/api/generator/llm/{prompt}` | Generate from prompt (legacy) | - | ReactFlowData | **12 hours** | LLM integration, prompt engineering, response parsing |
+| POST | `/api/generator/generate` | Generate from prompt | GenerateRequest | GenerateResponse | **16 hours** | Advanced LLM integration, template matching, validation |
+| GET | `/api/generator/templates` | Get workflow templates | - | List[WorkflowTemplate] | **4 hours** | Template storage and retrieval |
+| POST | `/api/generator/enhance/{id}` | Enhance workflow with AI | Enhancement type | WorkflowResponse | **20 hours** | Complex AI logic, workflow analysis, optimization |
 | **Validation & Layout** |
-| POST | `/api/workflows/validate` | Validate workflow | WorkflowCreate | ValidationResult |
-| POST | `/api/workflows/layout` | Calculate node positions | Nodes & Edges | List[NodeWithPosition] |
+| POST | `/api/workflows/validate` | Validate workflow | WorkflowCreate | ValidationResult | **10 hours** | Comprehensive validation rules, error reporting |
+| POST | `/api/workflows/layout` | Calculate node positions | Nodes & Edges | List[NodeWithPosition] | **12 hours** | Graph layout algorithms, optimization |
 | **Import/Export** |
-| POST | `/api/workflows/import` | Import workflow | File upload | WorkflowResponse |
-| GET | `/api/workflows/{id}/export` | Export workflow | - | File download |
+| POST | `/api/workflows/import` | Import workflow | File upload | WorkflowResponse | **8 hours** | File parsing, format validation, data transformation |
+| GET | `/api/workflows/{id}/export` | Export workflow | - | File download | **6 hours** | Multiple export formats, file generation |
 
 ## LLM Service Implementation
 

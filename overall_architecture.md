@@ -90,6 +90,9 @@ graph TB
 
 ## Implementation Plan
 
+### WorkflowBuilder Github 
+https://github.com/workflowbuildersdk/workflowbuilder
+
 ### Phase 1: Core Infrastructure
 1. Define data models and DTOs
 2. Create validation service
